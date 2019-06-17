@@ -1,5 +1,6 @@
 package maze.gui;
 
+import maze.core.Maze;
 import maze.core.Node;
 
 import javax.swing.JPanel;
@@ -23,7 +24,7 @@ public class Gui extends JPanel {
         g.fillRect(0, 0, (maze.length + 2) * 10, (maze.length + 2) * 10);
         for (int row = 0; row < maze[0].length; row++) {
             for (int column = 0; column < maze.length; column++) {
-                if (maze[row][column] == 1) {
+                if (maze[row][column] == Maze.PATH_TILE) {
                     g.setColor(Color.WHITE);
                     g.fillRect(column * 10 + 10, row * 10 + 10, 10, 10);
                 } else {
@@ -35,8 +36,7 @@ public class Gui extends JPanel {
 
         g.setColor(Color.RED);
         for (Node node : path) {
-            int[] position = node.getPosition();
-            g.fillRect(position[1] * 10 + 10, position[0] * 10 + 10, 10, 10);
+            g.fillRect(node.getY() * 10 + 10, node.getX() * 10 + 10, 10, 10);
         }
     }
 }

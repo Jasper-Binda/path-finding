@@ -5,15 +5,18 @@ import java.util.Set;
 
 public class Node {
 
-    private int[] position;
-    private int cost = 999;
-    private int path = cost;
-    private int heuristic = cost;
-    private Set<Node> neighbors = new HashSet<>();
+    private final int step = 1;
+
     private Node parent;
+    private Set<Node> neighbors = new HashSet<>();
+    private int heuristic = Short.MAX_VALUE;
+    private int cost = heuristic + step;
+    private int x;
+    private int y;
 
     public Node (int x, int y) {
-        this.position = new int[]{x, y};
+        this.x = x;
+        this.y = y;
     }
 
     public int getHeuristic() {
@@ -36,20 +39,19 @@ public class Node {
         return cost;
     }
 
-    public void setCost(Node current, int path) {
-        if (this.path > path) {
-            this.path = path;
-            this.parent = current;
-        }
-        this.cost = this.path + this.heuristic;
-    }
-
     public Node getParent() {
         return parent;
     }
 
-    public int[] getPosition() {
-        return position;
+    public void setParent(Node current) {
+        this.parent = current;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }

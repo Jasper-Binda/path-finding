@@ -7,8 +7,8 @@ import java.util.*;
 
 public class Astar {
 
-    private Set<Node> closedNodes = new HashSet<>();
     private PriorityQueue<Node> queue;
+    private Set<Node> processedNodes = new HashSet<>();
     private List<Node> path = new ArrayList<>();
 
     public Astar(Maze maze) {
@@ -27,13 +27,13 @@ public class Astar {
         while (true) {
             Node current = queue.poll();
             for (Node neighbor : current.getNeighbors()) {
-                if (closedNodes.contains(neighbor)) {
+                if (processedNodes.contains(neighbor)) {
                     continue;
                 }
-                neighbor.setCost(current, calculatePath(current, neighbor));
+                neighbor.setParent(current);
                 queue.add(neighbor);
             }
-            closedNodes.add(current);
+            processedNodes.add(current);
             if (current.getHeuristic() == 0) {
                 setPath(current);
                 break;
@@ -54,13 +54,13 @@ public class Astar {
 
     private void setHeuristics(Set<Node> nodes, Node end) {
         for(Node node : nodes) {
-            node.setHeuristic(calculatePath(node, end));
+            node.setHeuristic(getManhattenDistance(node, end));
         }
     }
 
-    private int calculatePath(Node node, Node end) {
-        int x = Math.abs(node.getPosition()[0] - end.getPosition()[0]);
-        int y = Math.abs(node.getPosition()[1] - end.getPosition()[1]);
+    private int getManhattenDistance(Node node, Node end) {
+        int x = Math.abs(node.getX() - end.getX());
+        int y = Math.abs(node.getY() - end.getY());
         return x + y;
     }
 }
