@@ -12,7 +12,7 @@ public class Maze {
     private Map<String, Node> positionMap = new HashMap<>();
     private int[][] maze;
 
-    public Maze(int[][] maze) {
+    Maze(int[][] maze) {
         this.maze = maze;
         long startTime = System.currentTimeMillis();
         this.nodes = createNodes();
@@ -37,9 +37,9 @@ public class Maze {
     private Node createNode(int row, int column) {
         Node node = new Node(row, column);
         positionMap.put("" + row + "-" + column, node);
-        if (row == 0) {
+        if (row == 0 && column == 0) {
             this.start = node;
-        } else if (row == maze.length - 1) {
+        } else if (row == maze.length - 1 && column == maze.length -1) {
             this.end = node;
         }
         return node;
